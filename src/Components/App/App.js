@@ -1,10 +1,48 @@
 import React from "react";
 import "./App.css";
 // import { SearchBar } from "../SearchBar/SearchBar";
-// import { SearchResults } from "../SearchResults/SearchResults";
+import { SearchResults } from "../SearchResults/SearchResults";
 // import { Playlist } from "../Playlist/Playlist";
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchResults: [
+                {
+                    name: "Friends",
+                    artist: "Mac Miller",
+                    album: "Faces",
+                    id: 1,
+                },
+                {
+                    name: "Falling Out The Sky",
+                    artist: "Armand Hammer",
+                    album: "Haram",
+                    id: 2,
+                },
+                {
+                    name: "FEEL.",
+                    artist: "Kendrick Lamar",
+                    album: "DAMN.",
+                    id: 3,
+                },
+                {
+                    name: "Two Worlds Apart",
+                    artist: "Little Simz",
+                    album: "Sometimes I Might Be Introvert",
+                    id: 4,
+                },
+                {
+                    name: "4 Your Eyez Only",
+                    artist: "J. Cole",
+                    album: "4 Your Eyez Only",
+                    id: 5,
+                },
+            ],
+        };
+    }
+
     render() {
         return (
             <div>
@@ -14,7 +52,9 @@ class App extends React.Component {
                 <div className="App">
                     {/* Add a SearchBar component */}
                     <div className="App-playlist">
-                        {/* Add a SearchResults component */}
+                        <SearchResults
+                            searchResults={this.state.searchResults}
+                        />
                         {/* Add a Playlist component */}
                     </div>
                 </div>
