@@ -1,76 +1,23 @@
 import React from "react";
 import "./App.css";
-// import { SearchBar } from "../SearchBar/SearchBar";
+import { SearchBar } from "../SearchBar/SearchBar";
 import { SearchResults } from "../SearchResults/SearchResults";
 import { Playlist } from "../Playlist/Playlist";
+import Spotify from "../../util/Spotify";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchResults: [
-                {
-                    name: "Friends",
-                    artist: "Mac Miller",
-                    album: "Faces",
-                    id: 1,
-                },
-                {
-                    name: "Falling Out The Sky",
-                    artist: "Armand Hammer",
-                    album: "Haram",
-                    id: 2,
-                },
-                {
-                    name: "FEEL.",
-                    artist: "Kendrick Lamar",
-                    album: "DAMN.",
-                    id: 3,
-                },
-                {
-                    name: "Two Worlds Apart",
-                    artist: "Little Simz",
-                    album: "Sometimes I Might Be Introvert",
-                    id: 4,
-                },
-                {
-                    name: "4 Your Eyez Only",
-                    artist: "J. Cole",
-                    album: "4 Your Eyez Only",
-                    id: 5,
-                },
-            ],
-            playlistName: "Jamie's Anthems",
-            playlistTracks: [
-                {
-                    name: "Falling Out The Sky",
-                    artist: "Armand Hammer",
-                    album: "Haram",
-                    id: 2,
-                },
-                {
-                    name: "FEEL.",
-                    artist: "Kendrick Lamar",
-                    album: "DAMN.",
-                    id: 3,
-                },
-                {
-                    name: "Two Worlds Apart",
-                    artist: "Little Simz",
-                    album: "Sometimes I Might Be Introvert",
-                    id: 4,
-                },
-                {
-                    name: "4 Your Eyez Only",
-                    artist: "J. Cole",
-                    album: "4 Your Eyez Only",
-                    id: 5,
-                },
-            ],
+            searchResults: [],
+            playlistName: "My Playlist",
+            playlistTracks: [],
         };
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
         this.updatePlaylistName = this.updatePlaylistName.bind(this);
+        this.savePlaylist = this.savePlaylist.bind(this);
+        this.search = this.search.bind(this);
     }
 
     addTrack(track) {
@@ -98,6 +45,24 @@ class App extends React.Component {
         });
     }
 
+    savePlaylist() {
+        const trackURIs = this.state.playlistTracks.map((track) => track.uri);
+        Spotify.savePlaylist(this.state.playlistName, trackURIs).then(() => {
+            this.setState({
+                playlistName: "New Playlist",
+                playlistTracks: [],
+            });
+        });
+    }
+
+    search(term) {
+        Spotify.search(term).then((searchResults) => {
+            this.setState({
+                searchResults: searchResults,
+            });
+        });
+    }
+
     render() {
         return (
             <div>
@@ -105,7 +70,7 @@ class App extends React.Component {
                     Ja<span className="highlight">mmm</span>ing
                 </h1>
                 <div className="App">
-                    {/* Add a SearchBar component */}
+                    <SearchBar onSearch={this.search} />
                     <div className="App-playlist">
                         <SearchResults
                             searchResults={this.state.searchResults}
@@ -116,6 +81,7 @@ class App extends React.Component {
                             playlistTracks={this.state.playlistTracks}
                             onRemove={this.removeTrack}
                             onNameChange={this.updatePlaylistName}
+                            onSave={this.savePlaylist}
                         />
                     </div>
                 </div>
