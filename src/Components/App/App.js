@@ -91,3 +91,9 @@ class App extends React.Component {
 }
 
 export default App;
+
+/*
+    - multiple playlists feature (https://docs.google.com/document/d/1QrEgRxANh9qeyev7gYD01LfLGWKQCKRS8RJ22NOj6OI/edit#heading=h.ij98uvnap5wc)
+    - allow search by hitting enter
+    - filter out songs already in playlist
+*/
