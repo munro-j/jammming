@@ -1,5 +1,6 @@
 const clientID = "eb57880fe1ec4ac392058670aef3ff8d";
-const redirectURI = "http://localhost:3000";
+// const redirectURI = "http://localhost:3000";
+const redirectURI = "https://jams-jams.herokuapp.com/";
 
 let accessToken;
 
